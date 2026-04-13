@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Chat GPT-5 Helper",
+  "version": "3.0.2",
+  "description": "Quick answers from GPT-5.1 via OpenAI Responses API.",
+  "permissions": ["activeTab"],
+  "host_permissions": ["https://api.openai.com/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },

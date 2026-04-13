@@ -1,0 +1,53 @@
+# ========================
+# Secrets – NEVER commit
+# ========================
+.env
+.env.*
+secrets.js
+config.local.js
+
+# ========================
+# WebStorm / JetBrains IDEs
+# ========================
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.shelf/
+
+# ========================
+# VS Code (general)
+# ========================
+.vscode/
+
+# ========================
+# OS files
+# ========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========================
+# Node / npm (if ever used)
+# ========================
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+
+# ========================
+# Build / dist output
+# ========================
+dist/
+build/
+*.zip
+*.crx
+*.pem
+
+# ========================
+# Logs & misc
+# ========================
+*.log
+*.tmp
+*.bak

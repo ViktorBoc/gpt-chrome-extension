@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>GPT Helper</title>
+    <style>
+        body { width: 320px; font-family: Arial, sans-serif; margin: 8px; }
+        .row { display: flex; gap: 6px; align-items: center; }
+        textarea { flex: 1; height: 36px; font-size: 12px; }
+        button { font-size: 12px; padding: 4px 10px; height: auto; }
+        #answer { margin-top: 6px; white-space: pre-wrap; font-size: 12px; }
+    </style>
+</head>
+<body>
+<div class="row">
+    <textarea id="question" placeholder="Vlož sem skúškovú/kvízovú otázku..."></textarea>
+    <button id="ask">Spýtať sa</button>
+</div>
+<div id="answer"></div>
+
+<script src="popup.js"></script>
+</body>
+</html>
