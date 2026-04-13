@@ -1,11 +1,12 @@
+// Renders a message in the answer div
 function renderMsg(msg) {
     document.getElementById('answer').textContent = msg;
 }
 
 async function ask() {
     const q = document.getElementById('question').value.trim();
-    if (!q) return renderMsg('Najprv vlož otázku.');
-    renderMsg('Premýšľam...');
+    if (!q) return renderMsg('Please enter a question first.');
+    renderMsg('Thinking...');
 
     chrome.runtime.sendMessage(
         { action: 'ask', payload: { prompt: systemPrompt(q) } },
@@ -14,14 +15,14 @@ async function ask() {
                 return renderMsg('❌ ' + chrome.runtime.lastError.message);
             }
             if (!resp?.ok) {
-                return renderMsg('❌ ' + (resp?.error || 'Neznáma chyba'));
+                return renderMsg('❌ ' + (resp?.error || 'Unknown error'));
             }
-            renderMsg(resp.answer || 'Bez odpovede');
+            renderMsg(resp.answer || 'No answer received');
         }
     );
 }
 
-// stručný prompt pre testové otázky
+// Builds the system prompt for the AI – edit this to fit your subject
 function systemPrompt(question) {
     return `
 Si expert na predmet Manažment informačných systémov (MIS).

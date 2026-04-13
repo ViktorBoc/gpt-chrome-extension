@@ -7,7 +7,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     (async () => {
         try {
-            const { prompt } = message.payload; // popup posiela len prompt
+            const { prompt } = message.payload; // popup sends only the prompt
             const answer = await askWithSingleFallback(prompt);
             sendResponse({ ok: true, answer });
         } catch (e) {
@@ -15,28 +15,28 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
     })();
 
-    return true; // nechá kanál otvorený pre async odpoveď
+    return true; // keeps the message channel open for async response
 });
 
 async function askWithSingleFallback(prompt) {
-    // 1) skús primárny model
+    // 1) try primary model
     const first = await callResponsesAPI(prompt, PRIMARY_MODEL);
     if (first.ok) {
         return extractText(first.data);
     }
 
-    // ak to NIE JE model_not_found, hneď vyhoď chybu
+    // if it's not a model_not_found error, throw immediately
     if (!isModelNotFound(first.text)) {
         throw new Error(`OpenAI API error: ${first.text}`);
     }
 
-    // 2) jediný fallback na gpt-4o
+    // 2) single fallback to gpt-4o
     const fb = await callResponsesAPI(prompt, FALLBACK_MODEL);
     if (fb.ok) {
         return `[${FALLBACK_MODEL}] ` + extractText(fb.data);
     }
 
-    // ak zlyhá aj fallback
+    // if fallback also fails
     throw new Error(`OpenAI API error (fallback failed): ${fb.text}`);
 }
 
@@ -65,7 +65,6 @@ async function callResponsesAPI(prompt, model) {
             body: JSON.stringify({
                 model,
                 input: prompt,
-                // držíme telo jednoduché kvôli kompatibilite
                 max_output_tokens: 300
             })
         });
